@@ -6,12 +6,24 @@ part of 'loan_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+LoanDto _$LoanDtoFromJson(Map<String, dynamic> json) => LoanDto(
+  loanId: (json['loanId'] as num).toInt(),
+  name: json['name'] as String,
+  notes: json['notes'] as String?,
+);
+
+Map<String, dynamic> _$LoanDtoToJson(LoanDto instance) => <String, dynamic>{
+  'loanId': instance.loanId,
+  'name': instance.name,
+  'notes': instance.notes,
+};
+
 LoanMovementDto _$LoanMovementDtoFromJson(Map<String, dynamic> json) =>
     LoanMovementDto(
       movementId: (json['movementId'] as num).toInt(),
       typeId: (json['typeId'] as num).toInt(),
       amount: (json['amount'] as num).toDouble(),
-      description: json['description'] as String,
+      description: json['description'] as String?,
       date: json['date'] as String,
       evidenceUrl: json['evidenceUrl'] as String?,
     );

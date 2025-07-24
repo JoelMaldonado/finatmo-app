@@ -1,3 +1,4 @@
+import 'package:finatmo/app/app_routes.dart';
 import 'package:finatmo/presentation/components/custom_button.dart';
 import 'package:finatmo/presentation/components/custom_text_field.dart';
 import 'package:finatmo/presentation/pages/login/login_provider.dart';
@@ -10,6 +11,9 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LoginProvider>(context);
+    provider.toMenu = () {
+      Navigator.pushNamed(context, AppRoutes.home);
+    };
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

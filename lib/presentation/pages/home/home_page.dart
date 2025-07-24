@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:finatmo/app/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   final List<String> frases = [
@@ -21,6 +22,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final frase = obtenerFraseAleatoria();
+    final now = DateTime.now();
+    final formatted = DateFormat('dd/MM/yyyy').format(now);
 
     return Scaffold(
       appBar: AppBar(title: const Text('Finatmo'), centerTitle: true),

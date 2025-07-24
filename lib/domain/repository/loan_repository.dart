@@ -1,5 +1,9 @@
-import 'package:finatmo/data/model/dtos/loan_dto.dart';
+import 'package:dartz/dartz.dart';
+import 'package:finatmo/core/error/failure.dart';
+import 'package:finatmo/domain/model/loan.dart';
+import 'package:finatmo/domain/model/loan_movement.dart';
 
 abstract class LoanRepository {
-  Future<List<LoanMovementDto>> getLoanMovements(int loanId);
+  Future<Either<Failure, List<Loan>>> getLoans();
+  Future<Either<Failure, List<LoanMovement>>> getLoanMovements(int loanId);
 }

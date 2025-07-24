@@ -1,6 +1,32 @@
+import 'package:finatmo/domain/enums/type_loan_movement.dart';
+import 'package:finatmo/domain/model/loan.dart';
+import 'package:finatmo/domain/model/loan_movement.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'loan_dto.g.dart';
+
+@JsonSerializable()
+class LoanDto {
+  @JsonKey(name: 'loanId')
+  final int loanId;
+
+  @JsonKey(name: 'name')
+  final String name;
+
+  @JsonKey(name: 'notes')
+  final String? notes;
+
+  LoanDto({required this.loanId, required this.name, required this.notes});
+
+  factory LoanDto.fromJson(Map<String, dynamic> json) =>
+      _$LoanDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LoanDtoToJson(this);
+
+  Loan toDomain() {
+    return Loan(loanId: loanId, name: name, notes: notes);
+  }
+}
 
 @JsonSerializable()
 class LoanMovementDto {
@@ -14,7 +40,7 @@ class LoanMovementDto {
   final double amount;
 
   @JsonKey(name: 'description')
-  final String description;
+  final String? description;
 
   @JsonKey(name: 'date')
   final String date;
@@ -35,4 +61,15 @@ class LoanMovementDto {
       _$LoanMovementDtoFromJson(json);
 
   Map<String, dynamic> toJson() => _$LoanMovementDtoToJson(this);
+
+  LoanMovement toDomain() {
+    return LoanMovement(
+      movementId: movementId,
+      type: TypeLoanMovementExtension.fromId(typeId),
+      amount: amount,
+      description: description,
+      date: DateTime.parse(date),
+      evidenceUrl: evidenceUrl,
+    );
+  }
 }

@@ -1,11 +1,13 @@
-import 'package:finatmo/data/model/dtos/loan_dto.dart';
+import 'package:finatmo/domain/model/loan_movement.dart';
 import 'package:finatmo/presentation/pages/add_loan_payment_page.dart';
 import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoanDetailPage extends StatefulWidget {
-  const LoanDetailPage({super.key});
+  final int loanId;
+
+  const LoanDetailPage({super.key, required this.loanId});
 
   @override
   State<LoanDetailPage> createState() => _LoanDetailPageState();
@@ -24,7 +26,10 @@ class _LoanDetailPageState extends State<LoanDetailPage>
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LoanProvider>(context, listen: false).getLoanMovements();
+      Provider.of<LoanProvider>(
+        context,
+        listen: false,
+      ).getLoanMovements(widget.loanId);
     });
   }
 
@@ -34,7 +39,7 @@ class _LoanDetailPageState extends State<LoanDetailPage>
     super.dispose();
   }
 
-  Widget _buildPaymentsTab(List<LoanMovementDto> payments) {
+  Widget _buildPaymentsTab(List<LoanMovement> payments) {
     return ListView.builder(
       itemCount: payments.length,
       itemBuilder: (context, index) {
@@ -48,7 +53,7 @@ class _LoanDetailPageState extends State<LoanDetailPage>
     );
   }
 
-  Widget _buildLoansTab(List<LoanMovementDto> loans) {
+  Widget _buildLoansTab(List<LoanMovement> loans) {
     return ListView.builder(
       itemCount: loans.length,
       itemBuilder: (context, index) {
@@ -79,8 +84,8 @@ class _LoanDetailPageState extends State<LoanDetailPage>
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildPaymentsTab(provider.getPayments()),
-          _buildLoansTab(provider.getLoans()),
+          _buildPaymentsTab(provider.getMovementsPayments),
+          _buildLoansTab(provider.getMovementsLoans),
         ],
       ),
       floatingActionButton: FloatingActionButton(

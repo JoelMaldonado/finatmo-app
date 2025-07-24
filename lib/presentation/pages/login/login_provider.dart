@@ -1,11 +1,17 @@
+import 'package:finatmo/domain/repository/auth_repository.dart';
 import 'package:flutter/material.dart';
 
 class LoginProvider extends ChangeNotifier {
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final AuthRepository authRepository;
+
+  LoginProvider({required this.authRepository});
+
+  final emailController = TextEditingController(text: 'joel@gmail.com');
+  final passwordController = TextEditingController(text: '1234');
   bool obscurePassword = true;
 
   bool isLoading = false;
+  Function? toMenu;
 
   void togglePasswordVisibility() {
     obscurePassword = !obscurePassword;
@@ -16,10 +22,15 @@ class LoginProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    // Simulate a network call
-    await Future.delayed(const Duration(seconds: 2));
+    final res = await authRepository.login(
+      email: emailController.text,
+      password: passwordController.text,
+    );
 
-    // After the call, set loading to false
+    res.fold((l) {}, (r) {
+      toMenu?.call();
+    });
+
     isLoading = false;
     notifyListeners();
   }

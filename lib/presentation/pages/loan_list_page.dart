@@ -1,48 +1,47 @@
 import 'package:finatmo/presentation/pages/add_loan_page.dart';
 import 'package:finatmo/presentation/pages/loan_detail_page.dart';
+import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class LoanListPage extends StatelessWidget {
-  final List<Map<String, dynamic>> loans = [
-    {
-      'name': 'Pedro',
-      'totalAmount': 5000.0,
-      'totalPaid': 2000.0,
-      'lastPayment': 1000.0,
-    },
-    {
-      'name': 'Ana',
-      'totalAmount': 3000.0,
-      'totalPaid': 1500.0,
-      'lastPayment': 500.0,
-    },
-  ];
+class LoanListPage extends StatefulWidget {
+  const LoanListPage({super.key});
 
-  LoanListPage({super.key});
+  @override
+  State<LoanListPage> createState() => _LoanListPageState();
+}
+
+class _LoanListPageState extends State<LoanListPage> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<LoanProvider>(context, listen: false).getLoans();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<LoanProvider>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Préstamos')),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: loans.length,
+        itemCount: provider.listLoans.length,
         itemBuilder: (context, index) {
-          final loan = loans[index];
-          final remaining = loan['totalAmount'] - loan['totalPaid'];
-
+          final loan = provider.listLoans[index];
           return Card(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
             child: ListTile(
-              title: Text(loan['name']),
+              title: Text(loan.name),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Deuda actual: S/ ${remaining.toStringAsFixed(2)}'),
-                  Text('Último pago: S/ ${loan['lastPayment']}'),
-                  Text('Total pagado: S/ ${loan['totalPaid']}'),
+                  Text('Deuda actual: S/500'),
+                  Text('Último pago: S/200'),
+                  Text('Total pagado: S/400'),
                 ],
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -51,7 +50,7 @@ class LoanListPage extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (_) {
-                      return LoanDetailPage();
+                      return LoanDetailPage(loanId: loan.loanId);
                     },
                   ),
                 );

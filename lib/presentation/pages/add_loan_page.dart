@@ -1,3 +1,5 @@
+import 'package:finatmo/presentation/components/custom_button.dart';
+import 'package:finatmo/presentation/components/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class AddLoanPage extends StatelessWidget {
@@ -11,39 +13,48 @@ class AddLoanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Nuevo préstamo')),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Nombre del amigo'),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: 'Monto prestado'),
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: noteController,
-              decoration: const InputDecoration(
-                labelText: 'Descripción (opcional)',
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        controller: nameController,
+                        hintText: 'Nombre del amigo',
+                        icon: Icons.person,
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: amountController,
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          labelText: 'Monto prestado',
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      TextField(
+                        controller: noteController,
+                        decoration: const InputDecoration(
+                          labelText: 'Descripción (opcional)',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const Spacer(),
-            ElevatedButton.icon(
-              onPressed: () {
-                // TODO: Save loan
-              },
-              icon: const Icon(Icons.check),
-              label: const Text('Guardar préstamo'),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
+              const SizedBox(height: 16),
+              CustomButton(
+                label: "Guardar préstamo",
+                leadingIcon: Icons.check,
+                onPressed: () {},
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
       ),
     );
