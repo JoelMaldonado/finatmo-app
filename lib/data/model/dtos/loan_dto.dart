@@ -16,7 +16,19 @@ class LoanDto {
   @JsonKey(name: 'notes')
   final String? notes;
 
-  LoanDto({required this.loanId, required this.name, required this.notes});
+  @JsonKey(name: 'totalLoanAmount')
+  final double? totalLoanAmount;
+
+  @JsonKey(name: 'totalPayments')
+  final double? totalPayments;
+
+  LoanDto({
+    required this.loanId,
+    required this.name,
+    required this.notes,
+    required this.totalLoanAmount,
+    required this.totalPayments,
+  });
 
   factory LoanDto.fromJson(Map<String, dynamic> json) =>
       _$LoanDtoFromJson(json);
@@ -24,7 +36,13 @@ class LoanDto {
   Map<String, dynamic> toJson() => _$LoanDtoToJson(this);
 
   Loan toDomain() {
-    return Loan(loanId: loanId, name: name, notes: notes);
+    return Loan(
+      loanId: loanId,
+      name: name,
+      notes: notes,
+      totalLoanAmount: totalLoanAmount ?? 0.0,
+      totalPayments: totalPayments ?? 0.0,
+    );
   }
 }
 

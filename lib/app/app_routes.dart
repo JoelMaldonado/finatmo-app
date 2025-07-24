@@ -1,3 +1,5 @@
+import 'package:finatmo/presentation/pages/add_loan/add_loan_page.dart';
+import 'package:finatmo/presentation/pages/add_movement/add_movement_page.dart';
 import 'package:finatmo/presentation/pages/daily_expenses_page.dart';
 import 'package:finatmo/presentation/pages/home/home_page.dart';
 import 'package:finatmo/presentation/pages/incomes_page.dart';
@@ -15,6 +17,8 @@ class AppRoutes {
   static const String loanList = '/loan-list';
   static const String loanPayments = '/loan-payments';
   static const String summary = '/summary';
+  static const String addLoan = '/add-loan';
+  static const String addMovement = '/add-movement';
 
   static get routes => {
     AppRoutes.login: (context) => const LoginPage(),
@@ -23,5 +27,7 @@ class AppRoutes {
     AppRoutes.incomes: (context) => IncomesPage(),
     AppRoutes.loanList: (context) => LoanListPage(),
     AppRoutes.summary: (context) => SummaryPage(),
+    AppRoutes.addLoan: (context) => const AddLoanPage(),
+    AppRoutes.addMovement: (context) => AddMovementPage(),
   };
 }

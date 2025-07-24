@@ -10,12 +10,16 @@ LoanDto _$LoanDtoFromJson(Map<String, dynamic> json) => LoanDto(
   loanId: (json['loanId'] as num).toInt(),
   name: json['name'] as String,
   notes: json['notes'] as String?,
+  totalLoanAmount: (json['totalLoanAmount'] as num?)?.toDouble(),
+  totalPayments: (json['totalPayments'] as num?)?.toDouble(),
 );
 
 Map<String, dynamic> _$LoanDtoToJson(LoanDto instance) => <String, dynamic>{
   'loanId': instance.loanId,
   'name': instance.name,
   'notes': instance.notes,
+  'totalLoanAmount': instance.totalLoanAmount,
+  'totalPayments': instance.totalPayments,
 };
 
 LoanMovementDto _$LoanMovementDtoFromJson(Map<String, dynamic> json) =>

@@ -1,4 +1,4 @@
-import 'package:finatmo/presentation/pages/add_loan_page.dart';
+import 'package:finatmo/app/app_routes.dart';
 import 'package:finatmo/presentation/pages/loan_detail_page.dart';
 import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +39,8 @@ class _LoanListPageState extends State<LoanListPage> {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Deuda actual: S/500'),
-                  Text('Último pago: S/200'),
-                  Text('Total pagado: S/400'),
+                  Text('Deuda actual: S/${loan.totalLoanAmount}'),
+                  Text('Total pagado: S/${loan.totalPayments}'),
                 ],
               ),
               trailing: const Icon(Icons.chevron_right),
@@ -61,17 +60,12 @@ class _LoanListPageState extends State<LoanListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) {
-                return AddLoanPage();
-              },
-            ),
-          );
+          Navigator.pushNamed(context, AppRoutes.addLoan).then((_) {
+            provider.getLoans();
+          });
         },
-        child: const Icon(Icons.add),
         tooltip: 'Nuevo préstamo',
+        child: const Icon(Icons.add),
       ),
     );
   }

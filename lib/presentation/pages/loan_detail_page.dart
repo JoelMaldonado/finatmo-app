@@ -1,5 +1,5 @@
+import 'package:finatmo/app/app_routes.dart';
 import 'package:finatmo/domain/model/loan_movement.dart';
-import 'package:finatmo/presentation/pages/add_loan_payment_page.dart';
 import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -90,14 +90,13 @@ class _LoanDetailPageState extends State<LoanDetailPage>
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushNamed(
             context,
-            MaterialPageRoute(
-              builder: (_) {
-                return AddLoanPaymentPage();
-              },
-            ),
-          );
+            AppRoutes.addMovement,
+            arguments: widget.loanId,
+          ).then((_) {
+            provider.getLoanMovements(widget.loanId);
+          });
         },
         tooltip: _tabController.index == 0
             ? 'Agregar pago'

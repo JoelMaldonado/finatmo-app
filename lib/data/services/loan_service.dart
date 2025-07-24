@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:finatmo/core/error/handle_dio_exception.dart';
 import 'package:finatmo/core/network/dio_config.dart';
 import 'package:finatmo/data/model/dtos/loan_dto.dart';
+import 'package:finatmo/data/model/requests/loan_requests.dart';
 import 'package:finatmo/data/model/responses/responses.dart';
 
 class LoanService {
@@ -23,6 +24,19 @@ class LoanService {
     }
   }
 
+  Future<ApiResponse<int>> addLoan(AddLoanRequest request) async {
+    try {
+      final call = await dio.post(path: '/loan', body: request.toJson());
+      final response = ApiResponse<int>.fromJson(
+        call.data,
+        (json) => json as int,
+      );
+      return response;
+    } on DioException catch (e) {
+      throw handleDioException(e);
+    }
+  }
+
   Future<ApiResponse<List<LoanMovementDto>>> getLoanMovements(
     int loanId,
   ) async {
@@ -37,6 +51,24 @@ class LoanService {
         (json) => (json as List<dynamic>)
             .map((e) => LoanMovementDto.fromJson(e))
             .toList(),
+      );
+      return response;
+    } on DioException catch (e) {
+      throw handleDioException(e);
+    }
+  }
+
+  Future<ApiResponse<int>> addLoanMovement(
+    AddLoanMovementRequest request,
+  ) async {
+    try {
+      final call = await dio.post(
+        path: '/loan/movements',
+        body: request.toJson(),
+      );
+      final response = ApiResponse<int>.fromJson(
+        call.data,
+        (json) => json as int,
       );
       return response;
     } on DioException catch (e) {
