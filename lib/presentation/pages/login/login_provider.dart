@@ -6,8 +6,10 @@ class LoginProvider extends ChangeNotifier {
 
   LoginProvider({required this.authRepository});
 
-  final emailController = TextEditingController(text: 'joel@gmail.com');
-  final passwordController = TextEditingController(text: '1234');
+  final emailController = TextEditingController(
+    text: 'joeljoasmf15984@gmail.com',
+  );
+  final passwordController = TextEditingController(text: '12345678');
   bool obscurePassword = true;
 
   bool isLoading = false;

@@ -1,4 +1,5 @@
 import 'package:finatmo/core/network/dio_config.dart';
+import 'package:finatmo/core/network/graphql_config.dart';
 import 'package:finatmo/core/storage/prefs.dart';
 import 'package:finatmo/core/storage/secure_storage.dart';
 import 'package:finatmo/di/provider_module.dart';
@@ -20,6 +21,10 @@ Future<void> setupDependencies() async {
 
   getIt.registerLazySingleton<DioConfig>(
     () => DioConfig(secureStorage: getIt<SecureStorage>()),
+  );
+
+  getIt.registerLazySingleton<GraphqlConfig>(
+    () => GraphqlConfig(secureStorage: getIt<SecureStorage>()),
   );
 
   await serviceModule(getIt);

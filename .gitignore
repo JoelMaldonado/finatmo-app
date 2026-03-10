@@ -13,7 +13,9 @@
 migrate_working_dir/
 
 .packages
-.env.*
+.env
+.env.local
+.env.prod
 
 # IntelliJ related
 *.iml

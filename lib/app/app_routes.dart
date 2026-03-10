@@ -1,8 +1,9 @@
-import 'package:finatmo/presentation/pages/add_loan/add_loan_page.dart';
+import 'package:finatmo/presentation/pages/add_loan_contact_page.dart';
 import 'package:finatmo/presentation/pages/add_movement/add_movement_page.dart';
 import 'package:finatmo/presentation/pages/daily_expenses_page.dart';
 import 'package:finatmo/presentation/pages/home/home_page.dart';
 import 'package:finatmo/presentation/pages/incomes_page.dart';
+import 'package:finatmo/presentation/pages/loan_detail_page.dart';
 import 'package:finatmo/presentation/pages/loan_list_page.dart';
 import 'package:finatmo/presentation/pages/login/login_page.dart';
 import 'package:finatmo/presentation/pages/summary_page.dart';
@@ -18,6 +19,7 @@ class AppRoutes {
   static const String loanPayments = '/loan-payments';
   static const String summary = '/summary';
   static const String addLoan = '/add-loan';
+  static const String loanDetails = '/loan-details';
   static const String addMovement = '/add-movement';
 
   static get routes => {
@@ -28,6 +30,7 @@ class AppRoutes {
     AppRoutes.loanList: (context) => LoanListPage(),
     AppRoutes.summary: (context) => SummaryPage(),
     AppRoutes.addLoan: (context) => const AddLoanPage(),
+    //AppRoutes.loanDetails: (context) => LoanDetailPage(),
     AppRoutes.addMovement: (context) => AddMovementPage(),
   };
 }

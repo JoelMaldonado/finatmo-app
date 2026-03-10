@@ -10,18 +10,20 @@ ApiResponse<T> _$ApiResponseFromJson<T>(
   Map<String, dynamic> json,
   T Function(Object? json) fromJsonT,
 ) => ApiResponse<T>(
-  statusCode: (json['statusCode'] as num).toInt(),
+  success: json['success'] as bool,
   message: json['message'] as String,
   data: _$nullableGenericFromJson(json['data'], fromJsonT),
+  timestamp: json['timestamp'] as String?,
 );
 
 Map<String, dynamic> _$ApiResponseToJson<T>(
   ApiResponse<T> instance,
   Object? Function(T value) toJsonT,
 ) => <String, dynamic>{
-  'statusCode': instance.statusCode,
+  'success': instance.success,
   'message': instance.message,
   'data': _$nullableGenericToJson(instance.data, toJsonT),
+  'timestamp': instance.timestamp,
 };
 
 T? _$nullableGenericFromJson<T>(
@@ -36,14 +38,14 @@ Object? _$nullableGenericToJson<T>(
 
 ApiErrorResponse _$ApiErrorResponseFromJson(Map<String, dynamic> json) =>
     ApiErrorResponse(
+      success: json['success'] as bool,
       message: json['message'] as String,
       error: json['error'] as String,
-      statusCode: (json['statusCode'] as num).toInt(),
     );
 
 Map<String, dynamic> _$ApiErrorResponseToJson(ApiErrorResponse instance) =>
     <String, dynamic>{
+      'success': instance.success,
       'message': instance.message,
       'error': instance.error,
-      'statusCode': instance.statusCode,
     };

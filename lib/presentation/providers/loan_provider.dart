@@ -1,6 +1,8 @@
-import 'package:finatmo/domain/enums/type_loan_movement.dart';
+import 'package:dartz/dartz.dart';
+import 'package:finatmo/core/error/failure.dart';
+import 'package:finatmo/data/model/requests/loan_requests.dart';
 import 'package:finatmo/domain/model/loan.dart';
-import 'package:finatmo/domain/model/loan_movement.dart';
+import 'package:finatmo/domain/model/loan_contact.dart';
 import 'package:finatmo/domain/repository/loan_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -11,21 +13,38 @@ class LoanProvider extends ChangeNotifier {
 
   List<Loan> listLoans = [];
 
-  List<LoanMovement> loanMovements = [];
-  List<LoanMovement> get getMovementsLoans =>
-      loanMovements.where((m) => m.type == TypeLoanMovement.loan).toList();
-  List<LoanMovement> get getMovementsPayments =>
-      loanMovements.where((m) => m.type == TypeLoanMovement.payment).toList();
+  List<LoanContact> listContacts = [];
 
-  Future<void> getLoans() async {
-    final res = await repository.getLoans();
-    res.fold((l) {}, (r) => listLoans = List.of(r));
-    notifyListeners();
+  String? errorMessage;
+
+  Future<void> getContacts() async {
+    final res = await repository.getContacts();
+    res.fold(
+      (l) {
+        debugPrint('Error fetching contacts: ${l.message}');
+        errorMessage = l.message;
+        notifyListeners();
+      },
+      (r) {
+        listContacts = r;
+        debugPrint('Contacts: $listContacts');
+        notifyListeners();
+      },
+    );
   }
 
-  Future<void> getLoanMovements(int loanId) async {
-    final res = await repository.getLoanMovements(loanId);
-    res.fold((l) {}, (r) => loanMovements = List.of(r));
-    notifyListeners();
+  Future<Either<Failure, Unit>> addContact({
+    required String fullName,
+    required String phone,
+    required String email,
+    required String notes,
+  }) async {
+    final request = AddLoanContactRequest(
+      fullName: fullName,
+      phone: phone.isEmpty ? null : phone,
+      email: email.isEmpty ? null : email,
+      notes: notes.isEmpty ? null : notes,
+    );
+    return await repository.addContact(request);
   }
 }

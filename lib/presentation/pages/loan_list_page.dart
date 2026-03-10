@@ -1,4 +1,5 @@
 import 'package:finatmo/app/app_routes.dart';
+import 'package:finatmo/presentation/components/card_loan_contact.dart';
 import 'package:finatmo/presentation/pages/loan_detail_page.dart';
 import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _LoanListPageState extends State<LoanListPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<LoanProvider>(context, listen: false).getLoans();
+      context.read<LoanProvider>().getContacts();
     });
   }
 
@@ -25,43 +26,37 @@ class _LoanListPageState extends State<LoanListPage> {
     final provider = Provider.of<LoanProvider>(context);
     return Scaffold(
       appBar: AppBar(title: const Text('Préstamos')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: provider.listLoans.length,
-        itemBuilder: (context, index) {
-          final loan = provider.listLoans[index];
-          return Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: ListTile(
-              title: Text(loan.name),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Deuda actual: S/${loan.totalLoanAmount}'),
-                  Text('Total pagado: S/${loan.totalPayments}'),
-                ],
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) {
-                      return LoanDetailPage(loanId: loan.loanId);
-                    },
-                  ),
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(24),
+              itemCount: provider.listContacts.length,
+              itemBuilder: (context, index) {
+                final contact = provider.listContacts[index];
+                return CardLoanContact(
+                  contact: contact,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return LoanDetailPage(loanId: 1);
+                        },
+                      ),
+                    );
+                  },
                 );
               },
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
             ),
-          );
-        },
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.pushNamed(context, AppRoutes.addLoan).then((_) {
-            provider.getLoans();
+            provider.getContacts();
           });
         },
         tooltip: 'Nuevo préstamo',

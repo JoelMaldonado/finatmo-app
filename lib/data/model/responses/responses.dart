@@ -4,8 +4,8 @@ part 'responses.g.dart';
 
 @JsonSerializable(genericArgumentFactories: true)
 class ApiResponse<T> {
-  @JsonKey(name: "statusCode")
-  final int statusCode;
+  @JsonKey(name: "success")
+  final bool success;
 
   @JsonKey(name: "message")
   final String message;
@@ -13,7 +13,15 @@ class ApiResponse<T> {
   @JsonKey(name: "data")
   final T? data;
 
-  ApiResponse({required this.statusCode, required this.message, this.data});
+  @JsonKey(name: "timestamp")
+  final String? timestamp;
+
+  ApiResponse({
+    required this.success,
+    required this.message,
+    this.data,
+    this.timestamp,
+  });
 
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
@@ -26,19 +34,19 @@ class ApiResponse<T> {
 
 @JsonSerializable()
 class ApiErrorResponse {
+  @JsonKey(name: "success")
+  final bool success;
+
   @JsonKey(name: "message")
   final String message;
 
   @JsonKey(name: "error")
   final String error;
 
-  @JsonKey(name: "statusCode")
-  final int statusCode;
-
   ApiErrorResponse({
+    required this.success,
     required this.message,
     required this.error,
-    required this.statusCode,
   });
 
   factory ApiErrorResponse.fromJson(Map<String, dynamic> json) =>

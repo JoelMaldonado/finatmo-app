@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:finatmo/core/storage/secure_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -11,9 +10,7 @@ class DioConfig {
   DioConfig({required this.secureStorage}) {
     _dio = Dio(
       BaseOptions(
-        baseUrl: kReleaseMode
-            ? dotenv.env['BASE_URL_ATM']!
-            : dotenv.env['BASE_URL_LOCAL']!,
+        baseUrl: dotenv.env['BASE_URL_REST']!,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
         headers: {'Content-Type': 'application/json'},

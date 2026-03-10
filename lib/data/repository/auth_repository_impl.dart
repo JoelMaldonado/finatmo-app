@@ -26,8 +26,8 @@ class AuthRepositoryImpl implements AuthRepository {
       final request = LoginRequest(email: email, password: password);
       final res = await service.login(request);
       if (res.data != null) {
-        secureStorage.saveAccessToken(res.data!.accessToken.token);
-        secureStorage.saveRefreshToken(res.data!.refreshToken.token);
+        secureStorage.saveAccessToken(res.data!.credentials.accessToken);
+        secureStorage.saveRefreshToken(res.data!.credentials.refreshToken);
         return Right(unit);
       } else {
         return Left(Failure(res.message));

@@ -21,20 +21,5 @@ class AddMovementProvider extends ChangeNotifier {
 
   Future<void> save(int loanId) async {
     final amount = double.parse(amountController.text);
-    final request = AddLoanMovementRequest(
-      loandId: loanId,
-      typeId: selectedValue.value,
-      amount: amount,
-      description: noteController.text,
-      evidenceUrl: null,
-    );
-    final res = await repository.addLoanMovement(request);
-
-    res.fold((l) {}, (r) {
-      amountController.clear();
-      noteController.clear();
-      selectedValue = TypeLoanMovement.loan;
-      toBack?.call();
-    });
   }
 }

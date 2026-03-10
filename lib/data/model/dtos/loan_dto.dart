@@ -1,93 +1,60 @@
-import 'package:finatmo/domain/enums/type_loan_movement.dart';
-import 'package:finatmo/domain/model/loan.dart';
-import 'package:finatmo/domain/model/loan_movement.dart';
+import 'package:finatmo/domain/model/loan_contact.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'loan_dto.g.dart';
 
 @JsonSerializable()
-class LoanDto {
-  @JsonKey(name: 'loanId')
-  final int loanId;
+class LoanContactDto {
+  @JsonKey(name: 'id')
+  final String id;
 
-  @JsonKey(name: 'name')
-  final String name;
+  @JsonKey(name: 'fullName')
+  final String fullName;
+
+  @JsonKey(name: 'phone')
+  final String? phone;
+
+  @JsonKey(name: 'email')
+  final String? email;
+
+  @JsonKey(name: 'isActive')
+  final bool? isActive;
 
   @JsonKey(name: 'notes')
   final String? notes;
 
-  @JsonKey(name: 'totalLoanAmount')
-  final double? totalLoanAmount;
+  @JsonKey(name: 'createdAt')
+  final String? createdAt;
 
-  @JsonKey(name: 'totalPayments')
-  final double? totalPayments;
+  @JsonKey(name: 'updatedAt')
+  final String? updatedAt;
 
-  LoanDto({
-    required this.loanId,
-    required this.name,
-    required this.notes,
-    required this.totalLoanAmount,
-    required this.totalPayments,
+  LoanContactDto({
+    required this.id,
+    required this.fullName,
+    this.phone,
+    this.email,
+    this.isActive,
+    this.notes,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  factory LoanDto.fromJson(Map<String, dynamic> json) =>
-      _$LoanDtoFromJson(json);
+  factory LoanContactDto.fromJson(Map<String, dynamic> json) =>
+      _$LoanContactDtoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$LoanDtoToJson(this);
+  Map<String, dynamic> toJson() => _$LoanContactDtoToJson(this);
 
-  Loan toDomain() {
-    return Loan(
-      loanId: loanId,
-      name: name,
+  LoanContact toDomain() {
+    return LoanContact(
+      id: id,
+      fullName: fullName,
+      phone: phone,
+      email: email,
+      isActive: isActive,
       notes: notes,
-      totalLoanAmount: totalLoanAmount ?? 0.0,
-      totalPayments: totalPayments ?? 0.0,
-    );
-  }
-}
-
-@JsonSerializable()
-class LoanMovementDto {
-  @JsonKey(name: 'movementId')
-  final int movementId;
-
-  @JsonKey(name: 'typeId')
-  final int typeId;
-
-  @JsonKey(name: 'amount')
-  final double amount;
-
-  @JsonKey(name: 'description')
-  final String? description;
-
-  @JsonKey(name: 'date')
-  final String date;
-
-  @JsonKey(name: 'evidenceUrl')
-  final String? evidenceUrl;
-
-  LoanMovementDto({
-    required this.movementId,
-    required this.typeId,
-    required this.amount,
-    required this.description,
-    required this.date,
-    required this.evidenceUrl,
-  });
-
-  factory LoanMovementDto.fromJson(Map<String, dynamic> json) =>
-      _$LoanMovementDtoFromJson(json);
-
-  Map<String, dynamic> toJson() => _$LoanMovementDtoToJson(this);
-
-  LoanMovement toDomain() {
-    return LoanMovement(
-      movementId: movementId,
-      type: TypeLoanMovementExtension.fromId(typeId),
-      amount: amount,
-      description: description,
-      date: DateTime.parse(date),
-      evidenceUrl: evidenceUrl,
+      createdAt: createdAt != null ? DateTime.parse(createdAt!) : null,
+      updatedAt: updatedAt != null ? DateTime.parse(updatedAt!) : null,
     );
   }
 }
