@@ -55,7 +55,7 @@ class _LoanListPageState extends State<LoanListPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, AppRoutes.addLoan).then((_) {
+          Navigator.pushNamed(context, AppRoutes.addContact).then((_) {
             provider.getContacts();
           });
         },

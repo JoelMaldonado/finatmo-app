@@ -1,4 +1,5 @@
 import 'package:finatmo/app/app_routes.dart';
+import 'package:finatmo/app/theme.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -10,9 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+      theme: AppTheme.lightTheme,
       initialRoute: initialRoute,
       routes: AppRoutes.routes,
     );

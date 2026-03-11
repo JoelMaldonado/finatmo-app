@@ -4,14 +4,14 @@ import 'package:finatmo/presentation/providers/loan_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AddLoanPage extends StatefulWidget {
-  const AddLoanPage({super.key});
+class AddLoanContactPage extends StatefulWidget {
+  const AddLoanContactPage({super.key});
 
   @override
-  State<AddLoanPage> createState() => _AddLoanPageState();
+  State<AddLoanContactPage> createState() => _AddLoanContactPageState();
 }
 
-class _AddLoanPageState extends State<AddLoanPage> {
+class _AddLoanContactPageState extends State<AddLoanContactPage> {
   final nameController = TextEditingController();
   final phoneController = TextEditingController();
   final emailController = TextEditingController();

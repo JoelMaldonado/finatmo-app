@@ -40,7 +40,7 @@ class _LoanDetailPageState extends State<LoanDetailPage> {
         onPressed: () {
           Navigator.pushNamed(
             context,
-            AppRoutes.addMovement,
+            AppRoutes.addLoan,
             arguments: widget.loanId,
           ).then((_) {
             // provider.getLoanMovements(widget.loanId);
